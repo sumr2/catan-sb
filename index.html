@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Include Firebase SDK modular syntax -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyAKYlv_2NU1yEkC0hSeOIqkaF5r1fvjOl4',
+        authDomain: 'catan-sb.firebaseapp.com',
+        projectId: 'catan-sb',
+        storageBucket: 'catan-sb.appspot.com',
+        messagingSenderId: '1051762635231',
+        appId: '1:1051762635231:web:6d7a1dc1ef10827925146a',
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <title>Catan Score-Keeper</title>
+  </head>
+  <body
+    class="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-700 via-orange-300 to-rose-800 bg-no-repeat"
+  >
+    <!-- Nav Bar -->
+    <nav class="flex container mx-auto p-6">
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center space-x-6">
+          <div
+            class="container flex items-center bg-yellow-500 hover:opacity-60 px-6 py-4 rounded-2xl"
+          >
+            <h1 class="text-white font-bold text-2xl uppercase">Catan SB</h1>
+          </div>
+          <div class="hidden space-x-8 font-bold md:flex px-20">
+            <a
+              href="#home"
+              id="home"
+              class="text-gray-700 hover:text-white uppercase font-light"
+              >Home</a
+            >
+            <a
+              href="scoreboards.html"
+              id="scoreboards"
+              class="text-gray-700 hover:text-white uppercase font-light"
+              >Scoreboards</a
+            >
+            <a
+              href="#about"
+              id="about"
+              class="text-gray-700 hover:text-white uppercase font-light"
+              >About</a
+            >
+          </div>
+        </div>
+        <div
+          class="hidden items-center space-x-6 font-bold md:flex px-20 uppercase"
+        >
+          <div class="hover:text-yellow-500 text-gray-700" onclick="login()">
+            Login
+          </div>
+          <a
+            href="#"
+            onclick="signUp()"
+            class="px-8 font-bold text-white bg-yellow-500 hover:opacity-70 p-2 rounded-2xl"
+            >Sign Up</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+      <div class="container flex flex-col mx-auto items-center">
+        <div class="flex flex-col w-fit">
+          <img
+            src="assets/images/catan_logo.png"
+            alt=""
+            class="p-6 max-w-full"
+          />
+        </div>
+        <div
+          class="flex flex-col items-center md:max-w-7xl py-3 md:py-8 mb-20 md:mb-32"
+        >
+          <h1
+            class="text-5xl md:text-7xl font-semibold text-yellow-700 text-center"
+          >
+            Scoreboard & Randomizer
+          </h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- Randomizer Section-->
+    <section id="randomizer">
+      <div id="content-wrapper" class="py-64 px-32">
+        <div id="content-left" class="bg-transparent">
+          <div id="gen-options">
+            <div>
+              <span class="text-4xl font-semibold"
+                ><b>Please select game type:</b></span
+              ><br />
+              <input
+                type="radio"
+                name="game-type"
+                value="normal"
+                checked
+                class="py-2"
+              />Normal (1-4 players)<br />
+              <input
+                class="text-green-600 py-2"
+                type="radio"
+                name="game-type"
+                value="expanded"
+              />Expansion (5-6 players)<br />
+            </div>
+          </div>
+          <button
+            id="gen-map-button"
+            type="button"
+            disabled="false"
+            class="font-semibold text-2xl"
+          >
+            Loading resources...
+          </button>
+        </div>
+        <div id="content-right">
+          <div id="map-container" class="bg-black"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="catan.js" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript">
+      $(document).ready(function () {
+        init();
+      });
+    </script>
+    <script>
+      // Function to handle sign-up
+      function signUp() {
+        var email = prompt('Enter your email:');
+        var password = prompt('Enter your password:');
+
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // User signed up successfully
+            var user = userCredential.user;
+            console.log('User signed up:', user);
+          })
+          .catch((error) => {
+            console.error('Sign-up error:', error.message);
+          });
+      }
+
+      // Function to handle login
+      function login() {
+        var email = prompt('Enter your email:');
+        var password = prompt('Enter your password:');
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // User logged in successfully
+            var user = userCredential.user;
+            console.log('User logged in:', user);
+          })
+          .catch((error) => {
+            console.error('Login error:', error.message);
+          });
+      }
+    </script>
+  </body>
+</html>
