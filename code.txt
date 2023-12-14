@@ -1,0 +1,35 @@
+// Function to handle sign-up
+      function signUp() {
+        var email = prompt('Enter your email:');
+        var password = prompt('Enter your password:');
+
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // User signed up successfully
+            var user = userCredential.user;
+            console.log('User signed up:', user);
+          })
+          .catch((error) => {
+            console.error('Sign-up error:', error.message);
+          });
+      }
+
+      // Function to handle login
+      function login() {
+        var email = document.getElementById('emailInput').value;
+        var password = document.getElementById('passwordInput').value;
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // User logged in successfully
+            var user = userCredential.user;
+            console.log('User logged in:', user);
+          })
+          .catch((error) => {
+            console.error('Login error:', error.message);
+          });
+      }
