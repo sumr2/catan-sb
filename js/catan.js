@@ -102,8 +102,8 @@ var resourceTypeToImageCanvas = {
 var dx = (size * (1 + Math.cos(Math.PI / 3))) / 2;
 var dy = size * Math.sin(Math.PI / 3);
 
-/*
- * Formula:
+/* Formula:
+ *
  *
  * Height = (coordSpacing + 2) * dy
  *        = (coordSpacing + 2) * Math.sin(Math.PI/3) * size
@@ -242,8 +242,8 @@ window.onresize = function (event) {
 
 function init() {
   loadImages(function () {
-    var button = $('button#gen-map-button')[0];
-    $(button).click(generate);
+    var button = document.getElementById('gen-map-button');
+    button.addEventListener('click', generate);
     button.disabled = false;
     button.innerHTML = 'Click to generate.';
   });
@@ -664,8 +664,6 @@ Array.prototype.swap = function (idx1, idx2) {
 };
 
 function addCanvas() {
-  //$(mapCanvas).attr("width", 600);
-  //$(mapCanvas).attr("height", 400);
   mapCanvas = document.createElement('canvas');
   drawingContext = mapCanvas.getContext('2d');
   mapCanvas.id = 'map-canvas';
@@ -676,9 +674,11 @@ function addCanvas() {
 }
 
 function sizeCanvas() {
-  var mapContainer = $('div#map-container')[0];
-  $(mapCanvas).attr('width', $(mapContainer).width());
-  $(mapCanvas).attr('height', $(mapContainer).height());
+  var mapContainer = document.getElementById('map-container');
+  // Remove the var keyword to reference the global mapCanvas variable
+  mapCanvas.width = window.innerWidth;
+  mapCanvas.height = window.innerHeight;
+
   canvasCenterY = mapCanvas.height / 2;
   canvasCenterX = mapCanvas.width / 2;
 }
