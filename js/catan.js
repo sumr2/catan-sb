@@ -674,7 +674,7 @@ function addCanvas() {
 }
 
 function sizeCanvas() {
-  var mapContainer = document.getElementById('map-container');
+  mapContainer = document.getElementById('map-container');
   // Remove the var keyword to reference the global mapCanvas variable
   mapCanvas.width = window.innerWidth;
   mapCanvas.height = window.innerHeight;
