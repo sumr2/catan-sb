@@ -123,6 +123,7 @@ addGameForm.addEventListener('submit', async (e) => {
 
       // Create an object with the game data
       const gameData = {
+        User: userId,
         GameNumber: gameNumber,
         GameType: gameType,
         Player1: player1,

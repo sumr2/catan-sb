@@ -8,19 +8,6 @@ function init() {
   generate();
 }
 
-function addCanvas() {
-  mapCanvas = document.createElement('canvas');
-  drawingContext = mapCanvas.getContext('2d');
-  mapCanvas.id = 'map-canvas';
-  sizeCanvas();
-  document.body.appendChild(mapCanvas);
-}
-
-function sizeCanvas() {
-  mapCanvas.width = window.innerWidth;
-  mapCanvas.height = window.innerHeight;
-}
-
 function generate() {
   var mapDef = {
     resourceDict: {
@@ -676,11 +663,19 @@ function addCanvas() {
 function sizeCanvas() {
   mapContainer = document.getElementById('map-container');
   // Remove the var keyword to reference the global mapCanvas variable
-  mapCanvas.width = window.innerWidth;
-  mapCanvas.height = window.innerHeight;
+  const fixedWidth = 800;
+  const fixedHeight = 600;
 
-  canvasCenterY = mapCanvas.height / 2;
+  mapCanvas.width = fixedWidth;
+  mapCanvas.height = fixedHeight;
+
   canvasCenterX = mapCanvas.width / 2;
+  canvasCenterY = mapCanvas.height / 2;
+
+  mapCanvas.style.position = 'relative';
+  mapCanvas.style.left = '50%';
+  mapCanvas.style.top = '50%';
+  mapCanvas.style.transform = 'translate(-50%, -50%)';
 }
 
 // http://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing

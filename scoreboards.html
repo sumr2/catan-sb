@@ -103,14 +103,13 @@
       <!-- Pop-up Container -->
       <form
         id="popup"
-        class="hidden absolute flex-col w-fit container border-2 border-gray-800 z-50 bg-transparent p-2 rounded-lg bg-gray-800 md:ml-48"
+        class="hidden absolute flex-col w-fit container border-2 border-gray-800 z-50 p-2 rounded-lg bg-gray-800 md:ml-48"
       >
         <span
           onclick="closePopup()"
           class="absolute top-2 right-2 cursor-pointer text-white text-2xl"
           >&times;</span
         >
-
         <!-- Inputs for Game Information -->
         <input
           id="gameNumber"
@@ -120,14 +119,16 @@
           placeholder="Game #"
           oninput="changeTextColor(this)"
         />
-        <input
+        <select
           id="gameType"
-          type="text"
-          class="block max-w-sm border-b-2 border-white p-2 bg-transparent"
+          class="block max-w-sm border-b-2 border-white p-2 bg-transparent text-white"
           name="gameType"
-          placeholder="Type: Reg/Ext"
           oninput="changeTextColor(this)"
-        />
+        >
+          <option value="Reg">Reg</option>
+          <option value="Ext">Ext</option>
+        </select>
+
         <input
           id="player1"
           type="text"
